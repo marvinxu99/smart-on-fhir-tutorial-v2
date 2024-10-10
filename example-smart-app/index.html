@@ -24,9 +24,9 @@
         <script type="text/javascript">
             FHIR.oauth2.ready().then(function(client) {
 
-                document.getElementById("patient").innerText = "auth done";
-                document.getElementById("meds").innerText = "Auth done";
-/***
+                //document.getElementById("patient").innerText = "auth done";
+                //document.getElementById("meds").innerText = "Auth done";
+
                 // Render the current patient (or any error)
                 client.patient.read().then(
                     function(pt) {
@@ -61,7 +61,7 @@
                         document.getElementById("meds").innerText = error.stack;
                     }
                 );
-***/
+
             }).catch(console.error);
         </script>
     </body>
