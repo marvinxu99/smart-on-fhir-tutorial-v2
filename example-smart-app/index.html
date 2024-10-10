@@ -124,7 +124,7 @@
                 document.getElementById('lname').innerText = pt.name[0].family;
                 document.getElementById('birthdate').innerText = pt.birthDate;
 
-                document.getElementById("patient").innerText = JSON.stringify(pt, null, 4);
+                //document.getElementById("patient").innerText = JSON.stringify(pt, null, 4);
 
               },
               function(error) {
@@ -141,6 +141,33 @@
                   document.getElementById("height").innerText = error.stack;
               }
           );
+
+          // Fetch observations
+          const obv = client.request("Observation", {
+              graph: true,
+              pageLimit: 0,  // Load all pages
+              flat: true,
+              query: {
+                code: {
+                  $or: [
+                    'http://loinc.org|8302-2',  // Body height
+                    'http://loinc.org|8462-4',  // Diastolic BP
+                    'http://loinc.org|8480-6',  // Systolic BP
+                    'http://loinc.org|2085-9',  // HDL cholesterol
+                    'http://loinc.org|2089-1',  // LDL cholesterol
+                    'http://loinc.org|55284-4'  // Blood pressure panel
+                  ]
+                }
+              }
+            }).then(
+              function(obv) {
+                  document.getElementById("patient").innerText = JSON.stringify(obv, null, 4);
+              },
+              function(error) {
+                  document.getElementById("patient").innerText = error.stack;
+              }
+
+            );
 
           /* client.patient.request(requestOptions, fhirOptions) Promise<Object>
               Wrapper for client.request that will automatically add a search parameter to the requested URL to 
