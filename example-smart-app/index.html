@@ -127,10 +127,21 @@
           //const pt = client.request(`Patient/${client.patient.id}`);
           const p = defaultPatient();
 
+          var fname = '';
+          var lname = '';
+
+          
+
           // Render the current patient (or any error)
           client.patient.read().then(
               function(pt) {
-                  document.getElementById("fname").innerText = JSON.stringify(pt, null, 4).slice(0, 30);
+                if (typeof pt.name[0] !== 'undefined') {
+                  p.fname = patient.name[0].given.join(' ');
+                  p.family = patient.name[0].family.join(' ');
+                }        
+                p.gender = pt.gender
+                // document.getElementById("fname").innerText = JSON.stringify(pt, null, 4).slice(0, 30);
+                document.getElementById("fname").innerText = pt.gender
               },
               function(error) {
                   document.getElementById("fname").innerText = error.stack;
@@ -182,7 +193,7 @@
           document.getElementById('hdl').textContent = p.hdl;
 
         }).catch(console.error);
-        
+
     </script>
 
   </body>
