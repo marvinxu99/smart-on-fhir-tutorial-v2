@@ -145,9 +145,9 @@
           // Fetch observations for the current patient
           const obv = client.patient.request("Observation", {
               useRefreshToken: true,
-              // graph: true,
-              // pageLimit: 0,  // Load all pages
-              // flat: true,
+              graph: true,
+              pageLimit: 0,  // Load all pages
+              flat: true,
               query: {
                 code: {
                   $or: [
