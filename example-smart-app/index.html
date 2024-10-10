@@ -166,7 +166,7 @@
           const obv = client.patient.request("Observation", {
               useRefreshToken: true,
               // graph: true,
-              // pageLimit: 0,  // Load all pages
+              pageLimit: 0,     // Load all pages
               flat: true,       // Default is false. If set to true, you will get an array even it is empty
               query: {
                 code: {
