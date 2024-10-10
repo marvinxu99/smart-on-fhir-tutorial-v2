@@ -163,8 +163,13 @@
             }).then(
               function(obv) {
                   var byCodes = client.byCodes(obv, 'code');
+                  
                   //document.getElementById("patient").innerText = JSON.stringify(obv, null, 4);
-                  document.getElementById("patient").innerText = byCodes('2085-9');
+
+                  document.getElementById("height").innerText = byCodes('8302-2');  
+
+                  document.getElementById("hdl").innerText = byCodes('2085-9');
+                  document.getElementById("ldl").innerText = byCodes('2089-1');
 
               },
               function(error) {
