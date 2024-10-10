@@ -1,120 +1,114 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <title>Example SMART App</title>
-        <!--
-        <script src="https://cdn.jsdelivr.net/npm/fhirclient/build/fhir-client.js"></script>
-        -->
-        <script src='./lib/js/fhir-client-v2.5.4.js'></script>
-        <style>
-            #patient, #meds {
-                font-family: Monaco, monospace;
-                white-space: pre;
-                font-size: 13px;
-                height: 30vh;
-                overflow: scroll;
-                border: 1px solid #CCC;
-            }
-        </style>
-    </head>
-    <body>
-        <h4>Current Patient</h4>
-        <div id="patient">Loading...</div>
-        <br/>
-        <h4>Medications</h4>
-        <div id="meds">Loading...</div>
-        <script type="text/javascript">
-            FHIR.oauth2.ready().then(function(client) {
+  <head>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge' />
+    <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
+    <title>Example-SMART-App</title>
 
-                //** for testing
-                //document.getElementById("patient").innerText = "auth done";
-                //document.getElementById("meds").innerText = "Auth done";
+    <link rel='stylesheet' type='text/css' href='./src/css/example-smart-app.css'>
+    <!--
+      Temporarily disable cerner-smart-embeddable-lib
+      <link rel='stylesheet' type='text/css' href='./lib/css/cerner-smart-embeddable-lib-1.0.0.min.css'>
+    -->
+  </head>
+  <body>
+    <div id='errors'>
+    </div>
+    <div id="loading" class="spinner">
+      <div class="bounce1"></div>
+      <div class="bounce2"></div>
+      <div class="bounce3"></div>
+    </div>
+    <div id='holder' >
+      <h2>Example-SMART-App</h2>
 
-// As per https://docs.smarthealthit.org/client-js/client.html:
-/*
-    A FHIR client is returned to you from the ready() call of the SMART API.
-    You can also create it yourself if needed:
-    
-        // BROWSER
-        const client = FHIR.client("https://r4.smarthealthit.org");
+      <h2>Patient Resource</h2>
+      <table>
+        <tr>
+          <th>First Name:</th>
+          <td id='fname'></td>
+        </tr>
+        <tr>
+          <th>Last Name:</th>
+          <td id='lname'></td>
+        </tr>
+        <tr>
+          <th>Gender:</th>
+          <td id='gender'></td>
+        </tr>
+        <tr>
+          <th>Date of Birth:</th>
+          <td id='birthdate'></td>
+        </tr>
+      </table>
+      <h2>Observation Resource</h2>
+      <table>
+        <tr>
+          <th>Height:</th>
+          <td id='height'></td>
+        </tr>
+        <tr>
+          <th>Systolic Blood Pressure:</th>
+          <td id='systolicbp'></td>
 
-        // SERVER
-        const client = smart(req, res).client("https://r4.smarthealthit.org");
+        </tr>
+        <tr>
+          <th>Diastolic Blood Pressure:</th>
+          <td id='diastolicbp'></td>
+        </tr>
+        <tr>
+          <th>LDL:</th>
+          <td id='ldl'></td>
+        </tr>
+        <tr>
+          <th>HDL:</th>
+          <td id='hdl'></td>
+        </tr>
+      </table>
+    </div>
+    <!-- Required JS files to enable this page to embed within an MPage -->
+    <!--
+      Temporarily disable cerner-smart-embeddable-lib
+      <script src='https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/6.26.0/polyfill.min.js'></script>
+      <script src='./lib/js/cerner-smart-embeddable-lib-1.0.0.min.js'></script>
+    -->
 
-    It exposes the following API:
+    <!-- Application-level javascript-->
+    <!--mx002
+    <script src='./src/js/example-smart-app.js'></script>
+    -->
+    <script src='./src/js/app.js'></script>
 
-        client.request(uri: String [, fhirOptions: Object]) Promise<Object>
-        client.request(url: URL [, fhirOptions: Object]) Promise<Object>
-        client.request(options: Object [, fhirOptions: Object]) Promise<Object>
+    <!-- FHIR Client JS Library -->
+    <!--mx002
+    <script src='./lib/js/fhir-client-v0.1.12.js'></script>
+    -->
+    <!--mx003
+    <script src="https://cdn.jsdelivr.net/npm/fhirclient/build/fhir-client.js"></script>
+    -->
+    <script src='./lib/js/fhir-client-v2.5.4.js'></script>
 
-************/
+    <!-- Prevent session bleed caused by single threaded embedded browser and sessionStorage API -->
+    <!-- https://github.com/cerner/fhir-client-cerner-additions -->
+    <!--mx002
+    <script src='./lib/js/fhir-client-cerner-additions-1.0.0.js'></script>
+    -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  
+    <script>
+      extractData().then(
+        //Display Patient Demographics and Observations if extractData was success
+        function(p) {
+          drawVisualization(p);
+        },
 
-                // Render the current patient (or any error)
-                client.patient.read().then(
-                    function(pt) {
-                        document.getElementById("patient").innerText = JSON.stringify(pt, null, 4);
-                    },
-                    function(error) {
-                        document.getElementById("patient").innerText = error.stack;
-                    }
-                );
-                
-                // Get FHIR version
-                client.getFhirRelease().then(
-                    function(fhir_version) {
-                        document.getElementById("meds").innerText = "FHIR version: " + fhir_version;
-                    },
-                    function(error) {
-                        document.getElementById("meds").innerText = error.stack;
-                    }
-                );
+        //Display 'Failed to call FHIR Service' if extractData failed
+        function() {
+          $('#loading').hide();
+          $('#errors').html('<p> Failed to call FHIR Service </p>');
+        }
+      );
+    </script>
 
-                /* client.patient.request(requestOptions, fhirOptions) Promise<Object>
-                    Wrapper for client.request that will automatically add a search parameter to the requested URL to 
-                    filter the requested resources to those related to the current patient. For example:
-
-                    client.patient.request("Observation"); // -> /Observation?patient=patient-id
-                    client.patient.request("Group");       // -> /Group?member=patient-id
-                */
-                client.patient.request("Observation").then(
-                    function(observations) {
-                        document.getElementById("meds").innerText = JSON.stringify(observations, null, 4);
-                    },
-                    function(error) {
-                        document.getElementById("meds").innerText = error.stack;
-                    }
-
-                );
-
-/********                
-                // Get MedicationRequests for the selected patient
-                client.request("/MedicationRequest?patient=" + client.patient.id, {
-                    resolveReferences: [ "medicationReference" ],
-                    graph: true
-                })
-                
-                // Reject if no MedicationRequests are found
-                .then(function(data) {
-                    if (!data.entry || !data.entry.length) {
-                        throw new Error("No medications found for the selected patient");
-                    }
-                    return data.entry;
-                })
-                
-
-                // Render the current patient's medications (or any error)
-                .then(
-                    function(meds) {
-                        document.getElementById("meds").innerText = JSON.stringify(meds, null, 4);
-                    },
-                    function(error) {
-                        document.getElementById("meds").innerText = error.stack;
-                    }
-                );
-***********/
-
-            }).catch(console.error);
-        </script>
-    </body>
+  </body>
 </html>
