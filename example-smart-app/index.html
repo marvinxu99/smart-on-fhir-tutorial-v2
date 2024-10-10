@@ -24,8 +24,28 @@
         <script type="text/javascript">
             FHIR.oauth2.ready().then(function(client) {
 
+                //** for testing
                 //document.getElementById("patient").innerText = "auth done";
                 //document.getElementById("meds").innerText = "Auth done";
+
+// as per https://docs.smarthealthit.org/client-js/client.html:
+/*
+    A FHIR client is returned to you from the ready() call of the SMART API.
+    You can also create it yourself if needed:
+    
+        // BROWSER
+        const client = FHIR.client("https://r4.smarthealthit.org");
+
+        // SERVER
+        const client = smart(req, res).client("https://r4.smarthealthit.org");
+
+    It exposes the following API:
+
+        client.request(uri: String [, fhirOptions: Object]) Promise<Object>
+        client.request(url: URL [, fhirOptions: Object]) Promise<Object>
+        client.request(options: Object [, fhirOptions: Object]) Promise<Object>
+
+************/
 
                 // Render the current patient (or any error)
                 client.patient.read().then(
@@ -37,6 +57,19 @@
                     }
                 );
                 
+                // Get FHIR version
+                client.getFhirRelease().then(
+                    function(fhir_version) {
+                        document.getElementById("meds").innerText = fhir_version;
+                    },
+                    function(error) {
+                        document.getElementById("meds").innerText = error.stack;
+                    }
+                )
+
+
+
+/********                
                 // Get MedicationRequests for the selected patient
                 client.request("/MedicationRequest?patient=" + client.patient.id, {
                     resolveReferences: [ "medicationReference" ],
@@ -61,6 +94,7 @@
                         document.getElementById("meds").innerText = error.stack;
                     }
                 );
+***********/
 
             }).catch(console.error);
         </script>
