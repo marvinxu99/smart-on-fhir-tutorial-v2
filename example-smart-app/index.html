@@ -137,7 +137,7 @@
               function(pt) {
                 if (typeof pt.name[0] !== 'undefined') {
                   p.fname = pt.name[0].given.join(' ');
-                  p.family = pt.name[0].family.join(' ');
+                  p.family = pt.name[0].family;
                 }        
                 p.gender = pt.gender
                 // document.getElementById("fname").innerText = JSON.stringify(pt, null, 4).slice(0, 30);
