@@ -12,8 +12,7 @@
     -->
   </head>
   <body>
-    <div id='errors'>
-    </div>
+    <div id='errors'> </div>
     <div id="loading" class="spinner">
       <div class="bounce1"></div>
       <div class="bounce2"></div>
@@ -66,6 +65,11 @@
         </tr>
       </table>
     </div>
+    <h4>Current Patient</h4>
+    <div id="patient">Loading...</div>
+    <br/>
+    <h4>Medications</h4>
+    <div id="meds">Loading...</div>
     <!-- Required JS files to enable this page to embed within an MPage -->
     <!--
       Temporarily disable cerner-smart-embeddable-lib
@@ -140,8 +144,7 @@
                   p.family = pt.name[0].family;
                 }        
                 p.gender = pt.gender;
-                document.getElementById("fname").innerText = JSON.stringify(pt, null, 4).slice(0, 30);
-                //console.log(JSON.stringify(pt, null, 4));
+                document.getElementById("patient").innerText = JSON.stringify(pt, null, 4);
                 document.getElementById("gender").innerText = pt.gender;
               },
               function(error) {
