@@ -162,7 +162,10 @@
               }
             }).then(
               function(obv) {
-                  document.getElementById("patient").innerText = JSON.stringify(obv, null, 4);
+                  var byCodes = client.byCodes(obv, 'code');
+                  //document.getElementById("patient").innerText = JSON.stringify(obv, null, 4);
+                  document.getElementById("patient").innerText = byCodes('2085-9');
+
               },
               function(error) {
                   document.getElementById("patient").innerText = error.stack;
