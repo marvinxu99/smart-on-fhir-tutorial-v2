@@ -108,6 +108,25 @@
     <script type="text/javascript">
       FHIR.oauth2.ready().then(function(client) {
 
+          // Default patient template
+          function defaultPatient() {
+            return {
+              fname: '',
+              lname: '',
+              gender: '',
+              birthdate: '',
+              height: '',
+              systolicbp: '',
+              diastolicbp: '',
+              ldl: '',
+              hdl: ''
+            };
+          }
+
+          // Fetch patient details
+          //const pt = client.request(`Patient/${client.patient.id}`);
+          const p = defaultPatient();
+
           // Render the current patient (or any error)
           client.patient.read().then(
               function(pt) {
@@ -148,8 +167,22 @@
           */
 
           $('#loading').hide(); // Hide loading when data has been successfully fetched
+          
+          // Visualization function
+          document.getElementById('holder').style.display = 'block';
+          document.getElementById('loading').style.display = 'none';
+          document.getElementById('fname').textContent = p.fname;
+          document.getElementById('lname').textContent = p.lname;
+          document.getElementById('gender').textContent = p.gender;
+          document.getElementById('birthdate').textContent = p.birthdate;
+          document.getElementById('height').textContent = p.height;
+          document.getElementById('systolicbp').textContent = p.systolicbp;
+          document.getElementById('diastolicbp').textContent = p.diastolicbp;
+          document.getElementById('ldl').textContent = p.ldl;
+          document.getElementById('hdl').textContent = p.hdl;
 
         }).catch(console.error);
+        
     </script>
 
   </body>
