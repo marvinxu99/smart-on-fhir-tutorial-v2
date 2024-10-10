@@ -140,9 +140,9 @@
                   p.family = pt.name[0].family;
                 }        
                 p.gender = pt.gender;
-                // document.getElementById("fname").innerText = JSON.stringify(pt, null, 4).slice(0, 30);
-                console.log(JSON.stringify(pt, null, 4));
-                document.getElementById("fname").innerText = pt.gender;
+                document.getElementById("fname").innerText = JSON.stringify(pt, null, 4).slice(0, 30);
+                //console.log(JSON.stringify(pt, null, 4));
+                document.getElementById("gender").innerText = pt.gender;
               },
               function(error) {
                   document.getElementById("fname").innerText = error.stack;
