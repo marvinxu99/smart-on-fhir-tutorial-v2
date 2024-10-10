@@ -144,6 +144,9 @@
                 p.gender = pt.gender;
                 document.getElementById("patient").innerText = JSON.stringify(pt, null, 4);
                 document.getElementById("gender").innerText = pt.gender;
+                document.getElementById('fname').innerText = pt.name[0].given.join(' ');
+                document.getElementById('lname').innerText = pt.name[0].family;
+
               },
               function(error) {
                   document.getElementById("fname").innerText = error.stack;
@@ -184,15 +187,15 @@
           // Visualization function
           document.getElementById('holder').style.display = 'block';
           document.getElementById('loading').style.display = 'none';
-          document.getElementById('fname').textContent = p.fname;
-          document.getElementById('lname').textContent = p.lname;
-          document.getElementById('gender').textContent = p.gender;
-          document.getElementById('birthdate').textContent = p.birthdate;
-          document.getElementById('height').textContent = p.height;
-          document.getElementById('systolicbp').textContent = p.systolicbp;
-          document.getElementById('diastolicbp').textContent = p.diastolicbp;
-          document.getElementById('ldl').textContent = p.ldl;
-          document.getElementById('hdl').textContent = p.hdl;
+          // document.getElementById('fname').innerText = p.fname;
+          // document.getElementById('lname').innerText = p.lname;
+          // document.getElementById('gender').innerText = p.gender;
+          document.getElementById('birthdate').innerText = p.birthdate;
+          document.getElementById('height').innerText = p.height;
+          document.getElementById('systolicbp').innerText = p.systolicbp;
+          document.getElementById('diastolicbp').innerText = p.diastolicbp;
+          document.getElementById('ldl').innerText = p.ldl;
+          document.getElementById('hdl').innerText = p.hdl;
 
         }).catch(console.error);
 
