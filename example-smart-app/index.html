@@ -111,25 +111,25 @@
 
     <script type="text/javascript">
      
-        function byCodes(observations, property) {
-          const lookup = {};
+        // function byCodes(observations, property) {
+        //   const lookup = {};
 
-          // Ensure we're working with an array of observations
-          (Array.isArray(observations) ? observations : [observations]).forEach(obs => {
-              const values = (obs[property] || []).map(c => c.coding.map(code => code.code)).flat();
-              values.forEach(code => {
-                  if (!lookup[code]) {
-                      lookup[code] = [];
-                  }
-                  lookup[code].push(obs);
-              });
-          });
+        //   // Ensure we're working with an array of observations
+        //   (Array.isArray(observations) ? observations : [observations]).forEach(obs => {
+        //       const values = (obs[property] || []).map(c => c.coding.map(code => code.code)).flat();
+        //       values.forEach(code => {
+        //           if (!lookup[code]) {
+        //               lookup[code] = [];
+        //           }
+        //           lookup[code].push(obs);
+        //       });
+        //   });
 
-          // Return a function that filters observations by one or more codes
-          return function(...codes) {
-              return codes.map(code => lookup[code] || []).flat();
-          };
-        }
+        //   // Return a function that filters observations by one or more codes
+        //   return function(...codes) {
+        //       return codes.map(code => lookup[code] || []).flat();
+        //   };
+        // }
 
       FHIR.oauth2.ready().then(function(client) {
 
@@ -182,7 +182,7 @@
               }
             }).then(
               function(obv) {
-                  const filter = byCodes(obv, 'code');
+                  const filter = client.byCodes(obv, 'code');
                   
                   document.getElementById("patient").innerText = JSON.stringify(obv, null, 4);
 
