@@ -139,9 +139,10 @@
                   p.fname = pt.name[0].given.join(' ');
                   p.family = pt.name[0].family;
                 }        
-                p.gender = pt.gender
+                p.gender = pt.gender;
                 // document.getElementById("fname").innerText = JSON.stringify(pt, null, 4).slice(0, 30);
-                document.getElementById("fname").innerText = pt.gender
+                console.log(JSON.stringify(pt, null, 4));
+                document.getElementById("fname").innerText = pt.gender;
               },
               function(error) {
                   document.getElementById("fname").innerText = error.stack;
