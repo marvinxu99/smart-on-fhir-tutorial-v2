@@ -60,7 +60,7 @@
                 // Get FHIR version
                 client.getFhirRelease().then(
                     function(fhir_version) {
-                        document.getElementById("meds").innerText = fhir_version;
+                        document.getElementById("meds").innerText = "FHIR version: " + fhir_version;
                     },
                     function(error) {
                         document.getElementById("meds").innerText = error.stack;
