@@ -112,9 +112,11 @@
     <script type="text/javascript">
       FHIR.oauth2.ready().then(function(client) {
 
-          // Default patient template
-          function defaultPatient() {
-            return {
+          // Fetch patient details
+          //const pt = client.request(`Patient/${client.patient.id}`);
+
+          // Set the default values
+          let p = {
               fname: '',
               lname: '',
               gender: '',
@@ -125,14 +127,6 @@
               ldl: '',
               hdl: ''
             };
-          }
-
-          // Fetch patient details
-          //const pt = client.request(`Patient/${client.patient.id}`);
-          let p = defaultPatient();
-
-          var fname = '';
-          var lname = '';
 
           // Render the current patient (or any error)
           client.patient.read().then(
@@ -143,9 +137,9 @@
                 //}        
                 p.gender = pt.gender;
                 document.getElementById("patient").innerText = JSON.stringify(pt, null, 4);
-                document.getElementById("gender").innerText = pt.gender;
-                document.getElementById('fname').innerText = pt.name[0].given.join(' ');
-                document.getElementById('lname').innerText = pt.name[0].family;
+                // document.getElementById("gender").innerText = pt.gender;
+                // document.getElementById('fname').innerText = pt.name[0].given.join(' ');
+                // document.getElementById('lname').innerText = pt.name[0].family;
 
               },
               function(error) {
@@ -187,9 +181,9 @@
           // Visualization function
           document.getElementById('holder').style.display = 'block';
           document.getElementById('loading').style.display = 'none';
-          // document.getElementById('fname').innerText = p.fname;
-          // document.getElementById('lname').innerText = p.lname;
-          // document.getElementById('gender').innerText = p.gender;
+          document.getElementById('fname').innerText = p.fname;
+          document.getElementById('lname').innerText = p.lname;
+          document.getElementById('gender').innerText = p.gender;
           document.getElementById('birthdate').innerText = p.birthdate;
           document.getElementById('height').innerText = p.height;
           document.getElementById('systolicbp').innerText = p.systolicbp;
