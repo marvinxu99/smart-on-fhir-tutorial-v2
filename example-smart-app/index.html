@@ -65,9 +65,24 @@
                     function(error) {
                         document.getElementById("meds").innerText = error.stack;
                     }
-                )
+                );
 
+                /* client.patient.request(requestOptions, fhirOptions) Promise<Object>
+                    Wrapper for client.request that will automatically add a search parameter to the requested URL to 
+                    filter the requested resources to those related to the current patient. For example:
 
+                    client.patient.request("Observation"); // -> /Observation?patient=patient-id
+                    client.patient.request("Group");       // -> /Group?member=patient-id
+                */
+                client.patient.request("Observation").then(
+                    function(observations) {
+                        document.getElementById("meds").innerText = JSON.stringify(observations, null, 4);
+                    },
+                    function(error) {
+                        document.getElementById("meds").innerText = error.stack;
+                    }
+
+                );
 
 /********                
                 // Get MedicationRequests for the selected patient
