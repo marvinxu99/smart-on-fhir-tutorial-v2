@@ -110,21 +110,7 @@
 -->
 
     <script type="text/javascript">
-
-      // Set up default patient values
-      let p = {
-        fname: '',
-        lname: '',
-        gender: '',
-        birthdate: '',
-        height: '',
-        systolicbp: '',
-        diastolicbp: '',
-        ldl: '',
-        hdl: ''
-      };
-
-      
+     
       FHIR.oauth2.ready().then(function(client) {
 
           // Fetch patient details
@@ -133,15 +119,11 @@
           // Render the current patient (or any error)
           client.patient.read().then(
               function(pt) {
-                //if (typeof pt.name[0] !== 'undefined') {
-                  p.fname = pt.name[0].given.join(' ');
-                  p.family = pt.name[0].family;
-                //}        
-                p.gender = pt.gender;
+                document.getElementById("gender").innerText = pt.gender;
+                document.getElementById('fname').innerText = pt.name[0].given.join(' ');
+                document.getElementById('lname').innerText = pt.name[0].family;
+
                 document.getElementById("patient").innerText = JSON.stringify(pt, null, 4);
-                // document.getElementById("gender").innerText = pt.gender;
-                // document.getElementById('fname').innerText = pt.name[0].given.join(' ');
-                // document.getElementById('lname').innerText = pt.name[0].family;
 
               },
               function(error) {
@@ -183,15 +165,15 @@
           // Visualization function
           document.getElementById('holder').style.display = 'block';
           document.getElementById('loading').style.display = 'none';
-          document.getElementById('fname').innerText = p.fname;
-          document.getElementById('lname').innerText = p.lname;
-          document.getElementById('gender').innerText = p.gender;
-          document.getElementById('birthdate').innerText = p.birthdate;
-          document.getElementById('height').innerText = p.height;
-          document.getElementById('systolicbp').innerText = p.systolicbp;
-          document.getElementById('diastolicbp').innerText = p.diastolicbp;
-          document.getElementById('ldl').innerText = p.ldl;
-          document.getElementById('hdl').innerText = p.hdl;
+          // document.getElementById('fname').innerText = p.fname;
+          // document.getElementById('lname').innerText = p.lname;
+          // document.getElementById('gender').innerText = p.gender;
+          // document.getElementById('birthdate').innerText = p.birthdate;
+          // document.getElementById('height').innerText = p.height;
+          // document.getElementById('systolicbp').innerText = p.systolicbp;
+          // document.getElementById('diastolicbp').innerText = p.diastolicbp;
+          // document.getElementById('ldl').innerText = p.ldl;
+          // document.getElementById('hdl').innerText = p.hdl;
 
         }).catch(console.error);
 
