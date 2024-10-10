@@ -142,23 +142,23 @@
               }
           );
 
-          // Fetch observations
-          const obv = client.request("Observation", {
+          // Fetch observations for the current patient
+          const obv = client.patient.request("Observation", {
               graph: true,
               pageLimit: 0,  // Load all pages
               flat: true,
-              query: {
-                code: {
-                  $or: [
-                    'http://loinc.org|8302-2',  // Body height
-                    'http://loinc.org|8462-4',  // Diastolic BP
-                    'http://loinc.org|8480-6',  // Systolic BP
-                    'http://loinc.org|2085-9',  // HDL cholesterol
-                    'http://loinc.org|2089-1',  // LDL cholesterol
-                    'http://loinc.org|55284-4'  // Blood pressure panel
-                  ]
-                }
-              }
+              // query: {
+              //   code: {
+              //     $or: [
+              //       'http://loinc.org|8302-2',  // Body height
+              //       'http://loinc.org|8462-4',  // Diastolic BP
+              //       'http://loinc.org|8480-6',  // Systolic BP
+              //       'http://loinc.org|2085-9',  // HDL cholesterol
+              //       'http://loinc.org|2089-1',  // LDL cholesterol
+              //       'http://loinc.org|55284-4'  // Blood pressure panel
+              //     ]
+              //   }
+              // }
             }).then(
               function(obv) {
                   document.getElementById("patient").innerText = JSON.stringify(obv, null, 4);
