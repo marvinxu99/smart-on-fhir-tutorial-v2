@@ -8,6 +8,14 @@
     <body>
         <script>
             FHIR.oauth2.authorize({
+                /*
+                authorize(options) - Some options are changed since v2:
+                    clientId - This was previously called client_id (which also works in v2+)
+                    clientSecret - This is now accepted because it is applicable on the server side
+                    iss - Since v2, pass iss option to make a Standalone Launch
+                    redirectUri - This was previously called redirect_uri (which also works in v2+)
+                    Other Options are available. See the full list.
+                */
 
               // The client_id that you should have obtained after registering a client at
               // the EHR.
@@ -19,7 +27,7 @@
               // patient/*.read    - Read patient data
               //scope: "launch openid fhirUser patient/*.read",
               scope: 'patient/Patient.read patient/Observation.read launch online_access openid profile'
-              
+
               // Typically, if your redirectUri points to the root of the current directory
               // (where the launchUri is), you can omit this option because the default value is
               // ".". However, some servers do not support directory indexes so "." and "./"
