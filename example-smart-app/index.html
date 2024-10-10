@@ -110,23 +110,25 @@
 -->
 
     <script type="text/javascript">
+
+      // Set up default patient values
+      let p = {
+        fname: '',
+        lname: '',
+        gender: '',
+        birthdate: '',
+        height: '',
+        systolicbp: '',
+        diastolicbp: '',
+        ldl: '',
+        hdl: ''
+      };
+
+      
       FHIR.oauth2.ready().then(function(client) {
 
           // Fetch patient details
           //const pt = client.request(`Patient/${client.patient.id}`);
-
-          // Set the default values
-          let p = {
-              fname: '',
-              lname: '',
-              gender: '',
-              birthdate: '',
-              height: '',
-              systolicbp: '',
-              diastolicbp: '',
-              ldl: '',
-              hdl: ''
-            };
 
           // Render the current patient (or any error)
           client.patient.read().then(
