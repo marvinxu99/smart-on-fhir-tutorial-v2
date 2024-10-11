@@ -164,30 +164,29 @@
 
           // Fetch observations for the current patient
           // Example GET [base]/Observation/$lastn?max=3&patient=Patient/123&category=vital-signs&code=9279-1,8867-4,85354-9
-          // client.patient.request("Observation", {
+          // client.request(`Observation?patient=Patient/${client.patient.id}&code=8302-2,8867-4,2085-9,2089-1`, {
           //     useRefreshToken: true,
           //     // graph: true,
           //     pageLimit: 3,     // Load all pages
           //     flat: true,       // Default is false. If set to true, you will get an array even it is empty
-          //     query: {
-          //       code: {
-          //         $or: [
-          //           'http://loinc.org|8302-2',  // Body height
-          //           'http://loinc.org|8462-4',  // Diastolic BP
-          //           'http://loinc.org|8480-6',  // Systolic BP
-          //           'http://loinc.org|2085-9',  // HDL cholesterol
-          //           'http://loinc.org|2089-1',  // LDL cholesterol
-          //           'http://loinc.org|55284-4'  // Blood pressure panel
-          //         ]
-          //       }
-          //     }
-          // }).then(
-          client.request(`Observation?patient=Patient/${client.patient.id}&code=8302-2,8867-4,2085-9,2089-1`, {
+          client.patient.request("Observation", {
               useRefreshToken: true,
               // graph: true,
               pageLimit: 3,     // Load all pages
               flat: true,       // Default is false. If set to true, you will get an array even it is empty
-            }).then(          
+              query: {
+                code: {
+                  $or: [
+                    'http://loinc.org|8302-2',  // Body height
+                    'http://loinc.org|8462-4',  // Diastolic BP
+                    'http://loinc.org|8480-6',  // Systolic BP
+                    'http://loinc.org|2085-9',  // HDL cholesterol
+                    'http://loinc.org|2089-1',  // LDL cholesterol
+                    'http://loinc.org|55284-4'  // Blood pressure panel
+                  ]
+                }
+              }
+          }).then(
               function(obv) {
                   const filter = client.byCodes(obv, 'code');
                   
