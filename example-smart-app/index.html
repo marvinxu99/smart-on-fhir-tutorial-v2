@@ -164,7 +164,7 @@
 
           // Fetch observations for the current patient
           // Example GET [base]/Observation/$lastn?max=3&patient=Patient/123&category=vital-signs&code=9279-1,8867-4,85354-9
-          // const obv = client.patient.request("Observation", {
+          // client.patient.request("Observation", {
           //     useRefreshToken: true,
           //     // graph: true,
           //     pageLimit: 3,     // Load all pages
@@ -191,13 +191,32 @@
               function(obv) {
                   const filter = client.byCodes(obv, 'code');
                   
-                  
+                 // Display the raw observation data for debugging purposes
                   document.getElementById("patient").innerText = JSON.stringify(obv, null, 4);
 
-                  document.getElementById("height").innerText = filter('8302-2');  
+                  // Filter and display height (code 8302-2), HDL (code 2085-9), and LDL (code 2089-1)
+                  const height = filter('8302-2')[0];
+                  const hdl = filter('2085-9')[0];
+                  const ldl = filter('2089-1')[0];
 
-                  document.getElementById("hdl").innerText = filter('2085-9');
-                  document.getElementById("ldl").innerText = filter('2089-1');
+                  // document.getElementById("height").innerText = filter('8302-2');  
+                  // document.getElementById("hdl").innerText = filter('2085-9');
+                  // document.getElementById("ldl").innerText = filter('2089-1');
+
+                  // Display height
+                  document.getElementById("height").innerText = height
+                      ? `${height.valueQuantity.value} ${height.valueQuantity.unit}`
+                      : "No data";
+
+                  // Display HDL cholesterol
+                  document.getElementById("hdl").innerText = hdl
+                      ? `${hdl.valueQuantity.value} ${hdl.valueQuantity.unit}`
+                      : "No data";
+
+                  // Display LDL cholesterol
+                  document.getElementById("ldl").innerText = ldl
+                      ? `${ldl.valueQuantity.value} ${ldl.valueQuantity.unit}`
+                      : "No data";
 
               },
               function(error) {
