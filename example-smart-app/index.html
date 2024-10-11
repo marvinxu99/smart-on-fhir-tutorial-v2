@@ -182,7 +182,7 @@
           //       }
           //     }
           // }).then(
-          const obv = client.request(`Observation/?Patient/${client.patient.id}&code=8302-2,8867-4,2085-9.2089-1`, {
+          const obv = client.request(`Observation?patient=${client.patient.id}&code=8302-2,8867-4,2085-9.2089-1`, {
               useRefreshToken: true,
               // graph: true,
               pageLimit: 3,     // Load all pages
